@@ -1,3 +1,4 @@
-export const News = () => {
-	return <div>news</div>;
+const News = () => {
+	return <div>News</div>;
 };
+export default News;

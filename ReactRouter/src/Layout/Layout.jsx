@@ -1,15 +1,20 @@
 import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer/Footer";
-import { Routers } from "../routes/Routers";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 
-export const Layout = () => {
+function Layout({ user, login, logout }) {
 	return (
 		<>
-			<Header />
-			<main className='w-full h-screen'>
-				<Routers />
+			<Header user={user} login={login} logout={logout} />
+			<main className='w-full h-screen bg-[#f9f9f9]'>
+				<Suspense fallback={<p>loading...</p>}>
+					<Outlet />
+				</Suspense>
 			</main>
 			<Footer />
 		</>
 	);
-};
+}
+
+export default Layout;

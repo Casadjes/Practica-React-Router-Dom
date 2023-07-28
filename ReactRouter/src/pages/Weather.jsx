@@ -1,3 +1,4 @@
-export const Weather = () => {
-	return <div>weather</div>;
+const Weather = () => {
+	return <div>Weather</div>;
 };
+export default Weather;
