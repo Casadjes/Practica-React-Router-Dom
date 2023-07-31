@@ -1,8 +1,12 @@
 import { NavLink, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { counterContext } from "../../context/counterContext";
+import profileImg from "../../assets/profileImg.webp";
 
-export const Navbar = ({ user, login, logout }) => {
+export const Navbar = () => {
 	const [isOpen, setisOpen] = useState(false);
+	const [isOver, setIsOver] = useState(false);
+	const { user, login } = useContext(counterContext);
 
 	return (
 		<nav className='relative bg-[#00144e] shadow'>
@@ -63,7 +67,7 @@ export const Navbar = ({ user, login, logout }) => {
 
 					{/* <!-- Mobile Menu open: "block", Menu closed: "hidden" --> */}
 					<div
-						className={`absolute top-[74px] shadow-md inset-x-0 z-20 w-full px-6 py-6 transition-all duration-300 ease-in-out bg-white lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center ${
+						className={`absolute top-[74px] shadow-md inset-x-0 z-20 w-full px-6 py-6 transition-all duration-300 ease-in-out bg-white lg:shadow-none lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center ${
 							isOpen ? "translate-x-0" : "-translate-x-full"
 						}`}>
 						<div className='flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8'>
@@ -89,7 +93,7 @@ export const Navbar = ({ user, login, logout }) => {
 							</NavLink>
 							<NavLink
 								to={"/profile"}
-								className='font-bold text-xl px-3 py-1 mx-3 mt-2 text-[#00144e] lg:text-[#f3f3f3] transition-colors duration-300 transform rounded-md lg:mt-0  hover:bg-gray-100 hover:text-[#00144e] '>
+								className=' font-bold text-xl px-3 py-1 mx-3 mt-2 text-[#00144e]  transition-colors duration-300 transform rounded-md lg:hidden hover:bg-gray-100 hover:text-[#00144e] '>
 								Profile
 							</NavLink>
 						</div>
@@ -120,14 +124,63 @@ export const Navbar = ({ user, login, logout }) => {
 
 						{/* user status and profile */}
 						{user ? (
-							<button
-								className='px-4 py-1  bg-blue-500 rounded-lg lg:ml-4'
-								onClick={logout}>
-								<span className='text-white font-semibold text-lg'>LogOut</span>
-							</button>
+							<div className='relative flex items-center mt-5 lg:mt-0'>
+								<button
+									className='hidden w-10 h-10 rounded-full lg:block lg:ml-4'
+									onClick={() => setIsOver(!isOver)}>
+									<img
+										className='w-full h-full object-cover rounded-full'
+										src={profileImg}
+										alt='profile'
+									/>
+								</button>
+
+								{/* boton mobile */}
+								<button
+									className='px-4 py-1  bg-blue-500 rounded-lg lg:hidden'
+									onClick={login}>
+									<span className='text-white font-semibold text-lg'>
+										LogOut
+									</span>
+								</button>
+
+								<div
+									className={`${
+										isOver ? "visible" : "invisible"
+									} hidden lg:block fixed  w-64  top-16 right-0 rounded-md bg-white border p-4 shadow-md `}>
+									{/* user img */}
+									<div className='grid place-content-center place-items-center h-1/2 mb-5'>
+										<img
+											src={profileImg}
+											className='w-20 h-20 rounded-full object-cover'
+											alt='userImg'
+										/>
+										<p>Lucas L.</p>
+									</div>
+
+									{/* navegation*/}
+									<div className='h-1/2 w-full flex flex-col'>
+										<p className='text-gray-700 w-full px-4 py-2 rounded-md hover:bg-gray-100 cursor-pointer'>
+											Settings
+										</p>
+										<NavLink
+											to={"/profile"}
+											className='text-gray-700 w-full px-4 py-2  rounded-md hover:bg-gray-100'>
+											Profile
+										</NavLink>
+
+										<i className='w-[93%] h-[1px] mx-auto border block my-2'></i>
+										<p
+											onClick={login}
+											className='text-gray-700 w-full px-4 py-2  rounded-md hover:bg-gray-100 cursor-pointer'>
+											LogOut
+										</p>
+									</div>
+								</div>
+							</div>
 						) : (
 							<button
-								className='px-4 py-1  bg-blue-500 rounded-lg lg:ml-4'
+								className='px-4 py-1 mt-5 bg-blue-500 rounded-lg lg:mt-0 lg:ml-4'
 								onClick={login}>
 								<span className='text-white font-semibold text-lg'>LogIn</span>
 							</button>
