@@ -7,7 +7,7 @@ function Layout() {
 	return (
 		<>
 			<Header />
-			<main className='w-full min-h-screen px-4 lg:px-14 bg-[#f9f9f9]'>
+			<main className='w-full min-h-screen px-4 py-20 lg:px-14 bg-[#f9f9f9]'>
 				<Suspense fallback={<p>loading...</p>}>
 					<Outlet />
 				</Suspense>

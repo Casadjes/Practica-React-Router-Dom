@@ -3,9 +3,9 @@ import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoutes } from "./components/ProtectedRoutes/ProtectedRoutes";
 import { GlobalState } from "./context/GlobalState";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const Home = lazy(() => import("./pages/Home"));
-const Live = lazy(() => import("./pages/Live"));
 const News = lazy(() => import("./pages/News"));
 const Weather = lazy(() => import("./pages/Weather"));
 const Sports = lazy(() => import("./pages/Sports"));
@@ -18,10 +18,6 @@ function App() {
 			element: <Layout />,
 			children: [
 				{ index: true, element: <Home /> },
-				{
-					path: "/live",
-					element: <Live />
-				},
 				{
 					path: "/news",
 					element: <News />
@@ -41,6 +37,10 @@ function App() {
 							<UserProfile />
 						</ProtectedRoutes>
 					)
+				},
+				{
+					path: "*",
+					element: <NotFoundPage />
 				}
 			]
 		}
